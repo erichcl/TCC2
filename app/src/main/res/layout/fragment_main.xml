@@ -20,4 +20,24 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teste Dialog"
+        android:id="@+id/btnDialog"
+        android:layout_below="@+id/hello_txt"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/btnActivityService"
+        android:layout_below="@+id/btnDialog"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="52dp" />
+
+
 </RelativeLayout>
