@@ -52,7 +52,7 @@ public class UserSvcActivityFragment extends Fragment {
             public void run() {
                 try {
                     SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-                    String fValue = "La Bela Bunda ";
+                    String fValue = "Teste WebService ";
                     request.addProperty("message", fValue);
                     SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                     envelope.setOutputSoapObject(request);
