@@ -34,12 +34,6 @@ public class MainFragment extends Fragment {
         public void onSuccess(LoginResult loginResult) {
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
-            if (profile != null)
-            {
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
         }
 
         @Override
@@ -69,13 +63,6 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
-        if (isLoggedIn())
-        {
-            Profile profile = Profile.getCurrentProfile();
-            Intent intent = new Intent(getActivity(), MapsActivity.class);
-            startActivity(intent);
-        }
-
         // Initialize the SDK before executing any other operations,
         // especially, if you're using Facebook UI elements.
         mCallBackManager = CallbackManager.Factory.create();
@@ -96,38 +83,6 @@ public class MainFragment extends Fragment {
         loginButton.setFragment(this);
         loginButton.registerCallback(mCallBackManager, mCallback);
         mTextDetails = (TextView) view.findViewById(R.id.hello_txt);
-
-//        Button btnDialog = (Button) view.findViewById(R.id.btnDialog);
-//        Button btnService = (Button) view.findViewById(R.id.btnActivityService);
-//
-//        btnDialog.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-//                alertDialogBuilder.setMessage("Are you sure,You wanted to make decision");
-//                alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface arg0, int arg1) {
-//                        Toast.makeText(getActivity(),"You clicked yes button", Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-////                        finish();
-//                    }
-//                });
-//                AlertDialog alertDialog = alertDialogBuilder.create();
-//                alertDialog.show();
-//            }
-//        });
-//
-//        btnService.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), UserSvcActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
