@@ -17,41 +17,47 @@ import org.ksoap2.transport.HttpTransportSE;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class UserSvcActivityFragment extends Fragment {
+public class UserService {
 
-    private static final String SOAP_ACTION = "http://tempuri.org/IUserService/getMessage";
-    private static final String METHOD_NAME = "getMessage";
     private static final String NAMESPACE = "http://tempuri.org/"; //"http://www.w3schools.com/webservices/";
     private static final String MAIN_REQUEST_URL = "http://www.elmat.kinghost.net/elmatservices/Services/UserService.svc";
 
-    public UserSvcActivityFragment() {
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user_svc, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Button btnTesteService = (Button) getView().findViewById(R.id.UserSvcBtn);
-        btnTesteService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callGetMessage();
-            }
-        });
-    }
-
-    public void callGetMessage()
-    {
+    public static void callRegisterUser(String accesToken) {
+        final String sendStuff = accesToken;
+        final String SOAP_ACTION = "http://tempuri.org/IUserService/RegisterUser";
         Thread networkThread = new Thread() {
             @Override
             public void run() {
                 try {
-                    SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                    SoapObject request = new SoapObject(NAMESPACE, "RegisterUser");
+                    request.addProperty("accessToken", sendStuff);
+                    SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                    envelope.setOutputSoapObject(request);
+                    envelope.dotNet = true;
+
+                    HttpTransportSE ht = new HttpTransportSE(MAIN_REQUEST_URL);
+                    ht.call(SOAP_ACTION, envelope);
+                    final SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                    final String str = response.toString();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        networkThread.start();
+    }
+
+
+    public static void callGetMessage()
+    {
+        final String SOAP_ACTION = "http://tempuri.org/IUserService/getMessage";
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    SoapObject request = new SoapObject(NAMESPACE, "getMessage");
                     String fValue = "Teste WebService ";
                     request.addProperty("message", fValue);
                     SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -63,13 +69,6 @@ public class UserSvcActivityFragment extends Fragment {
                     final SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
                     final String str = response.toString();
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            TextView result;
-                            result = (TextView) getView().findViewById(R.id.UserSvcTxt);//Text view id is textView1
-                            result.setText(str);
-                        }
-                    });
                 }
                 catch (Exception e) {
                     e.printStackTrace();

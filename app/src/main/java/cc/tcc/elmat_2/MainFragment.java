@@ -33,6 +33,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onSuccess(LoginResult loginResult) {
             AccessToken accessToken = loginResult.getAccessToken();
+            UserService.callRegisterUser(accessToken.getToken());
             Profile profile = Profile.getCurrentProfile();
         }
 

@@ -9,6 +9,8 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 
+import cc.tcc.elmat_2.model.DatabaseContract;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
@@ -17,8 +19,13 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
-        if (isLoggedIn())
+        String token = getCurrentToken();
+
+        Object teste = DatabaseContract.USER.CREATE_TABLE();
+
+        if (token != null )
         {
+            UserService.callRegisterUser(token);
             Profile profile = Profile.getCurrentProfile();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -34,12 +41,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public boolean isLoggedIn() {
+    public String getCurrentToken() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken != null)
-            return true;
+            return accessToken.getToken();
         else
-            return false;
+            return null;
     }
 /*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
