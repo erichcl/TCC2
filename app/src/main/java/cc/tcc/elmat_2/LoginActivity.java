@@ -9,7 +9,10 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 
-import cc.tcc.elmat_2.model.DatabaseContract;
+import java.text.ParseException;
+
+import cc.tcc.elmat_2.model.ELMATDbHelper;
+import cc.tcc.elmat_2.model.USER;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -20,13 +23,24 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         String token = getCurrentToken();
-
-        Object teste = DatabaseContract.USER.CREATE_TABLE();
-
         if (token != null )
         {
-            UserService.callRegisterUser(token);
+            String usrID = UserService.callRegisterUser(token);
             Profile profile = Profile.getCurrentProfile();
+            try {
+                USER usr = USER.getUserByID(Integer.parseInt(usrID), getApplicationContext());
+                //USER usr = new USER(Integer.parseInt(teste), Double.parseDouble(profile.getId()), getApplicationContext());
+                if (usr == null)
+                {
+                    usr = new USER(Integer.parseInt(usrID), Double.parseDouble(profile.getId()), getApplicationContext());
+                    usr.DbInsertMe();
+                }
+                USER tst = USER.getUserByID(Integer.parseInt(usrID), getApplicationContext());
+
+            }
+            catch(NumberFormatException e) {
+
+            }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             this.finishActivity(0);

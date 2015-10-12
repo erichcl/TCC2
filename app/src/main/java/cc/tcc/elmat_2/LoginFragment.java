@@ -24,7 +24,7 @@ import com.facebook.login.widget.LoginButton;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
     private TextView mTextDetails;
 
@@ -33,8 +33,11 @@ public class MainFragment extends Fragment {
         @Override
         public void onSuccess(LoginResult loginResult) {
             AccessToken accessToken = loginResult.getAccessToken();
-            UserService.callRegisterUser(accessToken.getToken());
+            String teste = UserService.callRegisterUser(accessToken.getToken());
             Profile profile = Profile.getCurrentProfile();
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            startActivity(intent);
+            getActivity().finishActivity(0);
         }
 
         @Override
@@ -56,7 +59,7 @@ public class MainFragment extends Fragment {
             return false;
     }
 
-    public MainFragment() {
+    public LoginFragment() {
     }
 
     @Override

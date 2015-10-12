@@ -23,9 +23,10 @@ public class UserService {
     private static final String MAIN_REQUEST_URL = "http://www.elmat.kinghost.net/elmatservices/Services/UserService.svc";
 
 
-    public static void callRegisterUser(String accesToken) {
+    public static String callRegisterUser(String accesToken) {
         final String sendStuff = accesToken;
         final String SOAP_ACTION = "http://tempuri.org/IUserService/RegisterUser";
+        final StringBuilder sb = new StringBuilder();
         Thread networkThread = new Thread() {
             @Override
             public void run() {
@@ -39,14 +40,19 @@ public class UserService {
                     HttpTransportSE ht = new HttpTransportSE(MAIN_REQUEST_URL);
                     ht.call(SOAP_ACTION, envelope);
                     final SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                    final String str = response.toString();
-
+                    sb.append(response.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         };
         networkThread.start();
+        try {
+            networkThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
 
