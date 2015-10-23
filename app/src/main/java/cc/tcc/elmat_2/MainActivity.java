@@ -36,6 +36,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import cc.tcc.elmat_2.messages.User;
+import cc.tcc.elmat_2.model.USER;
+
 public class MainActivity extends AppCompatActivity implements RoutingListener {
 
     protected GoogleMap map;
@@ -193,6 +196,10 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
             TesteRota();
             return true;
         }
+        if (id == R.id.action_listaCaronas) {
+            UserService.callGetMessage(this);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -227,6 +234,17 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
             e.printStackTrace();
         }
         return cityName;
+    }
+
+    private void testeListaCaronas()
+    {
+        USER modelUser = new USER(getApplicationContext());
+        modelUser = modelUser.DBgetMe();
+        User msgUser = new User();
+        msgUser.UserID = modelUser.getUserID();
+        msgUser.FacebookID = Math.round(modelUser.getFacebookID());
+        Location local = getBestLocation();
+        UserService.callListaCaronas(msgUser, local, null);
     }
 
     @Override

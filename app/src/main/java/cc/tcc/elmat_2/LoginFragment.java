@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import cc.tcc.elmat_2.messages.User;
+import cc.tcc.elmat_2.model.USER;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -33,8 +37,24 @@ public class LoginFragment extends Fragment {
         @Override
         public void onSuccess(LoginResult loginResult) {
             AccessToken accessToken = loginResult.getAccessToken();
-            String teste = UserService.callRegisterUser(accessToken.getToken());
             Profile profile = Profile.getCurrentProfile();
+            User ReturnUser = UserService.callRegisterUser(getContext(), accessToken.getToken());
+
+            try {
+                USER usr = USER.getUserByID(ReturnUser.UserID, getActivity().getApplicationContext());
+                //USER usr = new USER(Integer.parseInt(teste), Double.parseDouble(profile.getId()), getApplicationContext());
+                if (usr == null)
+                {
+                    usr = new USER(ReturnUser.UserID, Double.parseDouble(profile.getId()),  getActivity().getApplicationContext());
+                    usr.DbInsertMe();
+                }
+                USER tst = USER.getUserByID(ReturnUser.UserID,  getActivity().getApplicationContext());
+
+            }
+            catch(NumberFormatException e) {
+                Log.d("Login OnCreate", "NumberFormatException: " + e.getMessage());
+            }
+
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
             getActivity().finishActivity(0);

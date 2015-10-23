@@ -3,6 +3,7 @@ package cc.tcc.elmat_2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import com.facebook.AccessToken;
@@ -11,6 +12,7 @@ import com.facebook.Profile;
 
 import java.text.ParseException;
 
+import cc.tcc.elmat_2.messages.User;
 import cc.tcc.elmat_2.model.ELMATDbHelper;
 import cc.tcc.elmat_2.model.USER;
 
@@ -25,21 +27,21 @@ public class LoginActivity extends AppCompatActivity {
         String token = getCurrentToken();
         if (token != null )
         {
-            String usrID = UserService.callRegisterUser(token);
+            User ReturnUser = UserService.callRegisterUser(getApplicationContext(), token);
             Profile profile = Profile.getCurrentProfile();
             try {
-                USER usr = USER.getUserByID(Integer.parseInt(usrID), getApplicationContext());
+                USER usr = USER.getUserByID(ReturnUser.UserID, getApplicationContext());
                 //USER usr = new USER(Integer.parseInt(teste), Double.parseDouble(profile.getId()), getApplicationContext());
                 if (usr == null)
                 {
-                    usr = new USER(Integer.parseInt(usrID), Double.parseDouble(profile.getId()), getApplicationContext());
+                    usr = new USER(ReturnUser.UserID, Double.parseDouble(profile.getId()), getApplicationContext());
                     usr.DbInsertMe();
                 }
-                USER tst = USER.getUserByID(Integer.parseInt(usrID), getApplicationContext());
+                USER tst = USER.getUserByID(ReturnUser.UserID, getApplicationContext());
 
             }
             catch(NumberFormatException e) {
-
+                Log.d("Login OnCreate", "NumberFormatException: " + e.getMessage());
             }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

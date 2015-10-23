@@ -37,6 +37,10 @@ public class USER {
         ctx = context;
     }
 
+    public USER(Context context) {
+        ctx = context;
+    }
+
     public boolean DbInsertMe()
     {
         ELMATDbHelper dbHelper = ELMATDbHelper.getInstance(ctx);
@@ -64,7 +68,10 @@ public class USER {
 
     public USER DBgetMe()
     {
-        Cursor crs = getSingle();
+        ELMATDbHelper dbHelper = ELMATDbHelper.getInstance(ctx);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = new String[]{"UserID", "FacebookID"};
+        Cursor crs = db.query(myTableName, columns, null, null, null, null, null, "1");
         if (crs.moveToFirst()) // data?
         {
             String ID, FBID;

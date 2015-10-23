@@ -3,7 +3,8 @@
     <string name="app_title">Carona Solidária</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_ListaCaronas">Lista Caronas</string>
     <string name="app_id">1453561134949305</string>
-    <string name="title_activity_user_svc">UserSvcActivity</string>
+    <string name="title_activity_user_svc">ELMAT</string>
     <string name="title_activity_maps">Map</string>
 </resources>
