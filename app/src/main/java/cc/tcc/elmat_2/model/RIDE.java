@@ -57,14 +57,8 @@ public class RIDE {
         LonDest = r.LonDestino;
         distanciaOrg = r.distanciaOrg;
         distanciaDes = r.distanciaDes;
-        if (r.classOrg != null)
-        {
-            classOrg = r.classOrg.getValue();
-        }
-        if (r.classDes != null)
-        {
-            classDes = r.classDes.getValue();
-        }
+        classOrg = r.classOrg;
+        classDes = r.classDes;
         ctx = context;
     }
 

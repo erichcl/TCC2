@@ -4,14 +4,43 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView android:id="@+id/text1"
+    <TextView android:id="@+id/listItemUserName"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView android:id="@+id/text2"
-        android:textSize="16sp"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listItemOrgDist"
+            android:layout_weight="0.45" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listItemOrgColor"
+            android:layout_weight="0.05"
+            android:text=" " />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listItemDesDist"
+            android:layout_weight="0.45" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listItemDesColor"
+            android:layout_weight="0.05"
+            android:text=" " />
+    </LinearLayout>
+
 </LinearLayout>

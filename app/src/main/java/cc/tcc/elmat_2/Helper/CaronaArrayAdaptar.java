@@ -1,6 +1,7 @@
 package cc.tcc.elmat_2.Helper;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cc.tcc.elmat_2.R;
+import cc.tcc.elmat_2.messages.ClassifiCarona;
 import cc.tcc.elmat_2.messages.Ride;
 import cc.tcc.elmat_2.model.RIDE;
 
@@ -37,18 +39,66 @@ public class CaronaArrayAdaptar  extends ArrayAdapter<Ride> {
 
         Ride r = rides.get(position);
 
-        TextView text1 = (TextView)v.findViewById(R.id.text1);
-        TextView text2 = (TextView)v.findViewById(R.id.text2);
+        TextView userName = (TextView)v.findViewById(R.id.listItemUserName);
+        TextView OrgDist = (TextView)v.findViewById(R.id.listItemOrgDist);
+        TextView OrgColor = (TextView)v.findViewById(R.id.listItemOrgColor);
+        TextView DesDist = (TextView)v.findViewById(R.id.listItemDesDist);
+        TextView DesColor = (TextView)v.findViewById(R.id.listItemDesColor);
 
-        if (text1 != null)
+        if (userName != null)
         {
-            text1.setText(r.usr.Name);
+            userName.setText(r.usr.Name);
         }
-        if (text2 != null)
+        if (OrgDist != null)
         {
-            text2.setText("CARONA");
+            String dist = "Origem: " + String.format("%.2f", r.distanciaOrg) + " KM";
+            OrgDist.setText(dist);
         }
-
+        if (OrgColor != null)
+        {
+            int color;
+            switch (r.classOrg)
+            {
+                case 0:
+                    color = Color.GREEN;
+                    break;
+                case 1:
+                    color = Color.YELLOW;
+                    break;
+                case 2:
+                    color = Color.RED;
+                    break;
+                default:
+                    color = Color.GRAY;
+                    break;
+            }
+            OrgColor.setBackgroundColor(color);
+        }
+        if (DesDist != null)
+        {
+            String dist = "Destino: " +String.format("%.2f", r.distanciaDes) + " KM";
+            DesDist.setText(dist);
+        }
+        if (DesColor != null)
+        {
+            int color;
+            switch (r.classDes)
+            {
+                case 0:
+                    color = Color.GREEN;
+                    break;
+                case 1:
+                    color = Color.YELLOW;
+                    break;
+                case 2:
+                    color = Color.RED;
+                    break;
+                default:
+                    color = Color.GRAY;
+                    break;
+            }
+            DesColor.setBackgroundColor(color);
+        }
         return v;
     }
 }

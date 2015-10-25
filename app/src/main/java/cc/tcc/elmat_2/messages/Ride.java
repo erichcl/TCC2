@@ -13,8 +13,8 @@ public class Ride {
     public double LonOrigem;
     public double LatDestino;
     public double LonDestino;
-    public ClassifiCarona classOrg;
+    public int classOrg;
     public double distanciaOrg;
-    public ClassifiCarona classDes;
+    public int classDes;
     public double distanciaDes;
 }
