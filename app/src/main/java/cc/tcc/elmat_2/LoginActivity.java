@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
             User ReturnUser = UserService.callRegisterUser(getApplicationContext(), token);
             Profile profile = Profile.getCurrentProfile();
             try {
-                USER usr = USER.getUserByID(ReturnUser.UserID, getApplicationContext());
+                USER usr = USER.getUser(getApplicationContext());
                 //USER usr = new USER(Integer.parseInt(teste), Double.parseDouble(profile.getId()), getApplicationContext());
                 if (usr == null)
                 {

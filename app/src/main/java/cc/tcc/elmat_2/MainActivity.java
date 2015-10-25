@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
@@ -45,6 +46,11 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
     protected GoogleMap map;
     protected LocationManager locationManager;
     protected long gpsCheckTime = 60000;
+
+    private Marker myMarker = null;
+
+    static final int PICK_RIDE_REQUEST = 1;  // The request code
+
     private GoogleMap.OnMarkerClickListener myMarkerListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
@@ -55,13 +61,15 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
     private GoogleMap.OnMapLongClickListener myLongClickListener = new GoogleMap.OnMapLongClickListener() {
         @Override
         public void onMapLongClick(LatLng latLng) {
+            if (myMarker != null)
+            {
+                myMarker.remove();
+                myMarker = null;
+            }
             MarkerOptions mkOpt = new MarkerOptions();
             mkOpt.position(latLng);
             mkOpt.title("Destino");
-            map.addMarker(mkOpt);
-            Location local = getBestLocation();
-            LatLng myLatLng = new LatLng(local.getLatitude(), local.getLongitude());
-            TracaRota(myLatLng, latLng);
+            myMarker = map.addMarker(mkOpt);
         }
     };
 
@@ -220,11 +228,31 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
             return true;
         }
         if (id == R.id.action_listaCaronas) {
-            testeListaCaronas();
+
+            Intent intent = new Intent(this, CaronasActivity.class);
+            startActivityForResult(intent, PICK_RIDE_REQUEST);
+            //testeListaCaronas();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        // Check which request we're responding to
+        if (requestCode == PICK_RIDE_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                String sRideID = data.getExtras().getString("myRideID");
+                Toast.makeText(getApplicationContext(), "Carona "+sRideID+" escolhida!", Toast.LENGTH_LONG).show();
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+
+                // Do something with the contact here (bigger example below)
+            }
+        }
     }
 
     private void TracaRota(LatLng... points)
@@ -282,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
 
     @Override
     public void onRoutingFailure() {
-
+        Toast.makeText(getApplicationContext(), "Ocorreu um erro ao calcular a rota.", Toast.LENGTH_LONG).show();
     }
 
     @Override

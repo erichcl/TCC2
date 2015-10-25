@@ -99,9 +99,9 @@ public class USER {
             return null;
     }
 
-    public static USER getUserByID (int id, Context context)
+    public static USER getUser (Context context)
     {
-        Cursor crs = getSingle(id, context);
+        Cursor crs = getSingle(context);
         USER usr;
         if (crs.moveToFirst()) // data?
         {
@@ -121,15 +121,15 @@ public class USER {
             return null;
     }
 
-    private static Cursor getSingle(int id, Context context){
+    private static Cursor getSingle(Context context){
         ELMATDbHelper dbHelper = ELMATDbHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = new String[]{"UserID", "FacebookID", "Name"};
-        String whereClause = "UserID = ?";
-        String[] whereArgs = new String[] {
-                String.valueOf(id)
-        };
-        Cursor res =  db.query(myTableName, columns, whereClause, whereArgs, null, null, null, "1");
+//        String whereClause = "UserID = ?";
+//        String[] whereArgs = new String[] {
+//                String.valueOf(id)
+//        };
+        Cursor res =  db.query(myTableName, columns, null, null, null, null, null, "1");
         return res;
     }
 }

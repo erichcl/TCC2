@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment {
             User ReturnUser = UserService.callRegisterUser(getContext(), accessToken.getToken());
 
             try {
-                USER usr = USER.getUserByID(ReturnUser.UserID, getActivity().getApplicationContext());
+                USER usr = USER.getUser(getActivity().getApplicationContext());
                 if (usr == null)
                 {
                     usr = new USER(ReturnUser.UserID, Double.parseDouble(profile.getId()), profile.getName(),  getActivity().getApplicationContext());
