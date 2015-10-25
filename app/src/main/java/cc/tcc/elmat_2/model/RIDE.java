@@ -55,10 +55,16 @@ public class RIDE {
         LonOrg = r.LonOrigem;
         LatDest = r.LatDestino;
         LonDest = r.LonDestino;
-        classOrg = r.classOrg.getValue();
         distanciaOrg = r.distanciaOrg;
-        classDes = r.classDes.getValue();
         distanciaDes = r.distanciaDes;
+        if (r.classOrg != null)
+        {
+            classOrg = r.classOrg.getValue();
+        }
+        if (r.classDes != null)
+        {
+            classDes = r.classDes.getValue();
+        }
         ctx = context;
     }
 
