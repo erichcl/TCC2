@@ -4,6 +4,7 @@ import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +21,7 @@ import cc.tcc.elmat_2.messages.GeoPoint;
 import cc.tcc.elmat_2.messages.Ride;
 import cc.tcc.elmat_2.messages.ServiceResponse;
 import cc.tcc.elmat_2.messages.User;
+import cc.tcc.elmat_2.model.USER;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -69,7 +71,7 @@ public class UserService {
         return retorno;
     }
 
-    public static ArrayList<Ride> callListaCaronas(Context pCtx, User usr, Location Origem, Location Destino) {
+    public static ArrayList<Ride> callListaCaronas(Context pCtx, User usr, LatLng Origem, LatLng Destino) {
         ArrayList<Ride> retorno = new ArrayList<Ride>();
         final Context ctx = pCtx;
         final User sendUsr = usr;
@@ -119,6 +121,38 @@ public class UserService {
             Log.d("Error JsonResult", ex.getMessage());
         }
         return retorno;
+    }
+
+    public static void callAtendeCarona(Context pCtx, User usr, Ride ride) {
+        final Context ctx = pCtx;
+        final User sendUsr = usr;
+        final Ride sendRide = ride;
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject joPV = new JSONObject();
+
+                    Gson gson = new Gson();
+                    String usrJson = gson.toJson(sendUsr);
+
+                    joPV.put("usr", usrJson);
+                    joPV.put("RideID", sendRide.RideID);
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/AtendeSolicitacaoCarona", joPV);
+                    Log.d("Atende Carona", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
     }
 
     public static void callGetMessage(Context pCtx) {

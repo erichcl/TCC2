@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -35,10 +36,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cc.tcc.elmat_2.messages.Ride;
 import cc.tcc.elmat_2.messages.User;
+import cc.tcc.elmat_2.model.RIDE;
 import cc.tcc.elmat_2.model.USER;
 
 public class MainActivity extends AppCompatActivity implements RoutingListener {
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
     protected long gpsCheckTime = 60000;
 
     private Marker myMarker = null;
+    private Marker caronaOrigem = null;
+    private Marker caronaDestino = null;
 
     static final int PICK_RIDE_REQUEST = 1;  // The request code
 
@@ -228,10 +234,21 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
             return true;
         }
         if (id == R.id.action_listaCaronas) {
-
+            Location local = getBestLocation();
             Intent intent = new Intent(this, CaronasActivity.class);
+            intent.putExtra("LatOrg", local.getLatitude());
+            intent.putExtra("LonOrg", local.getLongitude());
+            if (myMarker != null)
+            {
+                intent.putExtra("TemDestino", true);
+                intent.putExtra("LatDest", myMarker.getPosition().latitude);
+                intent.putExtra("LonDest", myMarker.getPosition().longitude);
+            }
+            else
+            {
+                intent.putExtra("TemDestino", false);
+            }
             startActivityForResult(intent, PICK_RIDE_REQUEST);
-            //testeListaCaronas();
             return true;
         }
 
@@ -245,12 +262,37 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
         if (requestCode == PICK_RIDE_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                String sRideID = data.getExtras().getString("myRideID");
-                Toast.makeText(getApplicationContext(), "Carona "+sRideID+" escolhida!", Toast.LENGTH_LONG).show();
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
+                double cLatOrg = data.getExtras().getDouble("cLatOrg");
+                double cLonOrg = data.getExtras().getDouble("cLonOrg");
+                double cLatDes = data.getExtras().getDouble("cLatDes");
+                double cLonDes = data.getExtras().getDouble("cLonDes");
 
-                // Do something with the contact here (bigger example below)
+                LatLng cOrigem = new LatLng(cLatOrg, cLonOrg);
+                LatLng cDestino = new LatLng(cLatDes, cLonDes);
+
+                MarkerOptions mkcOrigem = new MarkerOptions();
+                MarkerOptions mkcDestino = new MarkerOptions();
+
+                mkcOrigem.position(cOrigem);
+                mkcDestino.position(cDestino);
+                mkcOrigem.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                mkcDestino.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
+                caronaOrigem = map.addMarker(mkcOrigem);
+                caronaDestino = map.addMarker(mkcDestino);
+
+                Location local = getBestLocation();
+                LatLng dOrigem = new LatLng(local.getLatitude(), local.getLongitude());
+
+                if (myMarker != null)
+                {
+                    LatLng dDestino = new LatLng(myMarker.getPosition().latitude, myMarker.getPosition().longitude);
+                    TracaRota(dOrigem, cOrigem, cDestino, dDestino);
+                }
+                else
+                {
+                    TracaRota(dOrigem, cOrigem, cDestino);
+                }
             }
         }
     }
@@ -295,17 +337,6 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
             e.printStackTrace();
         }
         return cityName;
-    }
-
-    private void testeListaCaronas()
-    {
-        USER modelUser = new USER(getApplicationContext());
-        modelUser = modelUser.DBgetMe();
-        User msgUser = new User();
-        msgUser.UserID = modelUser.getUserID();
-        msgUser.FacebookID = Math.round(modelUser.getFacebookID());
-        Location local = getBestLocation();
-        UserService.callListaCaronas(this, msgUser, local, null);
     }
 
     @Override
@@ -357,5 +388,4 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
 }

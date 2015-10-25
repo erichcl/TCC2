@@ -1,52 +1,106 @@
 package cc.tcc.elmat_2;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.common.api.BooleanResult;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import cc.tcc.elmat_2.Helper.CaronaArrayAdaptar;
+import cc.tcc.elmat_2.messages.Ride;
+import cc.tcc.elmat_2.messages.User;
 import cc.tcc.elmat_2.model.RIDE;
 import cc.tcc.elmat_2.model.USER;
 
 
 public class CaronasActivity extends ListActivity {
+    USER usr = USER.getUser(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caronas2);
-        USER usr = USER.getUser(this);
 
-        //ArrayList<RIDE> rides = RIDE.SolicitationRides(usr.UserID, this);
 
-        // Instanciating an array list (you don't need to do this,
-        // you already have yours).
-        List<String> your_array_list = new ArrayList<String>();
-        your_array_list.add("foo");
-        your_array_list.add("bar");
+        Intent intent = getIntent();
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        double LatOrg = intent.getExtras().getDouble("LatOrg");
+        double LonOrg = intent.getExtras().getDouble("LonOrg");
+
+        LatLng origem = new LatLng(LatOrg, LonOrg);
+        LatLng destino = null;
+        if (intent.getExtras().getBoolean("TemDestino"))
+        {
+            double LatDest = intent.getExtras().getDouble("LatDest");
+            double LonDest = intent.getExtras().getDouble("LonDest");
+            destino = new LatLng(LatDest, LonDest);
+        }
+
+        ArrayList<Ride> rides = ListaCaronas(origem, destino);
+
+        ArrayAdapter<Ride> arrayAdapter = new CaronaArrayAdaptar(
                 this,
-                android.R.layout.simple_list_item_1,
-                your_array_list );
+                R.layout.carona_item_layout,
+                rides );
 
         setListAdapter(arrayAdapter);
-
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent data = new Intent();
-        data.putExtra("myRideID", l.getItemAtPosition(position).toString());
-        l.getItemAtPosition(position);
-        // Activity finished ok, return the data
-        setResult(RESULT_OK, data);
-        finish();
+        final Ride item = (Ride)l.getItemAtPosition(position);
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Atender essa carona?");
+        alertDialogBuilder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                Intent data = new Intent();
+                AtendeCarona(item);
+                data.putExtra("cLatOrg", item.LatOrigem);
+                data.putExtra("cLonOrg", item.LonOrigem);
+                data.putExtra("cLatDes", item.LatDestino);
+                data.putExtra("cLonDes", item.LonDestino);
+                // Activity finished ok, return the data
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private ArrayList<Ride> ListaCaronas(LatLng origem, LatLng destino)
+    {
+        USER modelUser = usr;
+        User msgUser = new User();
+        msgUser.UserID = modelUser.getUserID();
+        msgUser.FacebookID = Math.round(modelUser.getFacebookID());
+        ArrayList<Ride> myRides = UserService.callListaCaronas(this, msgUser, origem, destino);
+        return myRides;
+    }
+
+    private void AtendeCarona(Ride r)
+    {
+        USER modelUser = usr;
+        User msgUser = new User();
+        msgUser.UserID = modelUser.getUserID();
+        msgUser.FacebookID = Math.round(modelUser.getFacebookID());
+        UserService.callAtendeCarona(this, msgUser, r);
     }
 }
