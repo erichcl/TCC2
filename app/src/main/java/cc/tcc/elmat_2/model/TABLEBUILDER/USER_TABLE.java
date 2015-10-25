@@ -14,6 +14,7 @@ public class USER_TABLE extends TABLE_BUILDER implements BaseColumns {
         ArrayList<ColumnType> lista = new ArrayList<ColumnType>();
         lista.add(new ColumnType("UserID", INTEGER_TYPE));
         lista.add(new ColumnType("FacebookID", BIGINT_TYPE));
+        lista.add(new ColumnType("Name", TEXT_TYPE));
         Columns = lista;
     }
 }

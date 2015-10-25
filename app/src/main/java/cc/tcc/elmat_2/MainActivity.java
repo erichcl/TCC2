@@ -29,6 +29,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -44,6 +45,25 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
     protected GoogleMap map;
     protected LocationManager locationManager;
     protected long gpsCheckTime = 60000;
+    private GoogleMap.OnMarkerClickListener myMarkerListener = new GoogleMap.OnMarkerClickListener() {
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            marker.remove();
+            return true;
+        }
+    };
+    private GoogleMap.OnMapLongClickListener myLongClickListener = new GoogleMap.OnMapLongClickListener() {
+        @Override
+        public void onMapLongClick(LatLng latLng) {
+            MarkerOptions mkOpt = new MarkerOptions();
+            mkOpt.position(latLng);
+            mkOpt.title("Destino");
+            map.addMarker(mkOpt);
+            Location local = getBestLocation();
+            LatLng myLatLng = new LatLng(local.getLatitude(), local.getLongitude());
+            TracaRota(myLatLng, latLng);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +72,13 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         map = mapFragment.getMap();
         startLocationManager();
+        map.setMyLocationEnabled(true);
+        map.setOnMapLongClickListener(myLongClickListener);
+        map.setOnMarkerClickListener(myMarkerListener);
 
         Location local = getBestLocation();
-        //CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(local.getLatitude(), local.getLongitude()));
-        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(18.015365, -77.499382));
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(local.getLatitude(), local.getLongitude()));
+        //CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(18.015365, -77.499382));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
         map.moveCamera(center);
@@ -202,6 +225,16 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void TracaRota(LatLng... points)
+    {
+        Routing routing = new Routing.Builder()
+                .travelMode(Routing.TravelMode.WALKING)
+                .withListener(this)
+                .waypoints(points)
+                .build();
+        routing.execute();
     }
 
     private void TesteRota()

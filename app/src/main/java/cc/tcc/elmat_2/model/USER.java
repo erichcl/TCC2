@@ -10,9 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class USER {
     private static final String myTableName = "USER";
-    private int UserID;
-    private double FacebookID;
     private Context ctx;
+
+    public int UserID;
+    public double FacebookID;
+    public String Name;
+
     //private
 
     public int getUserID() {
@@ -37,6 +40,14 @@ public class USER {
         ctx = context;
     }
 
+    public USER(int userID, double facebookID, String name, Context context) {
+        UserID = userID;
+        FacebookID = facebookID;
+        Name = name;
+        ctx = context;
+    }
+
+
     public USER(Context context) {
         ctx = context;
     }
@@ -48,6 +59,7 @@ public class USER {
         ContentValues contentValues = new ContentValues();
         contentValues.put("UserID", UserID);
         contentValues.put("FacebookID", FacebookID);
+        contentValues.put("Name", Name);
         db.insert(myTableName, null, contentValues);
         return true;
     }
@@ -56,7 +68,7 @@ public class USER {
     private Cursor getSingle(){
         ELMATDbHelper dbHelper = ELMATDbHelper.getInstance(ctx);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] columns = new String[]{"UserID", "FacebookID"};
+        String[] columns = new String[]{"UserID", "FacebookID", "Name"};
         //Cursor res =  db.rawQuery("select * from contacts where id=" + id + "", null);
         String whereClause = "UserID = ?";
         String[] whereArgs = new String[] {
@@ -70,15 +82,17 @@ public class USER {
     {
         ELMATDbHelper dbHelper = ELMATDbHelper.getInstance(ctx);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] columns = new String[]{"UserID", "FacebookID"};
+        String[] columns = new String[]{"UserID", "FacebookID", "Name"};
         Cursor crs = db.query(myTableName, columns, null, null, null, null, null, "1");
         if (crs.moveToFirst()) // data?
         {
-            String ID, FBID;
+            String ID, FBID, NM;
             ID = crs.getString(crs.getColumnIndex("UserID"));
             FBID = crs.getString(crs.getColumnIndex("FacebookID"));
+            NM = crs.getString(crs.getColumnIndex("Name"));
             UserID = Integer.parseInt(ID);
             FacebookID = Double.parseDouble(FBID);
+            Name = NM;
             return this;
         }
         else
@@ -91,14 +105,16 @@ public class USER {
         USER usr;
         if (crs.moveToFirst()) // data?
         {
-            String ID, FBID;
+            String ID, FBID, NM;
             int UsrID;
             double FcbkID;
             ID = crs.getString(crs.getColumnIndex("UserID"));
             FBID = crs.getString(crs.getColumnIndex("FacebookID"));
+            NM = crs.getString(crs.getColumnIndex("Name"));
             UsrID = Integer.parseInt(ID);
             FcbkID = Double.parseDouble(FBID);
             usr = new USER(UsrID, FcbkID, context);
+            usr.Name = NM;
             return usr;
         }
         else
@@ -108,7 +124,7 @@ public class USER {
     private static Cursor getSingle(int id, Context context){
         ELMATDbHelper dbHelper = ELMATDbHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] columns = new String[]{"UserID", "FacebookID"};
+        String[] columns = new String[]{"UserID", "FacebookID", "Name"};
         String whereClause = "UserID = ?";
         String[] whereArgs = new String[] {
                 String.valueOf(id)

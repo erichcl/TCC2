@@ -34,11 +34,9 @@ public class LoginActivity extends AppCompatActivity {
                 //USER usr = new USER(Integer.parseInt(teste), Double.parseDouble(profile.getId()), getApplicationContext());
                 if (usr == null)
                 {
-                    usr = new USER(ReturnUser.UserID, Double.parseDouble(profile.getId()), getApplicationContext());
+                    usr = new USER(ReturnUser.UserID, Double.parseDouble(profile.getId()), ReturnUser.Name, getApplicationContext());
                     usr.DbInsertMe();
                 }
-                USER tst = USER.getUserByID(ReturnUser.UserID, getApplicationContext());
-
             }
             catch(NumberFormatException e) {
                 Log.d("Login OnCreate", "NumberFormatException: " + e.getMessage());

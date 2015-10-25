@@ -14,7 +14,8 @@ public class RIDE_TABLE extends TABLE_BUILDER implements BaseColumns {
         ArrayList<TABLE_BUILDER.ColumnType> lista = new ArrayList<TABLE_BUILDER.ColumnType>();
         lista.add(new TABLE_BUILDER.ColumnType("RideID", INTEGER_TYPE));
         lista.add(new TABLE_BUILDER.ColumnType("UserID", INTEGER_TYPE));
-        lista.add(new TABLE_BUILDER.ColumnType("Hour", TEXT_TYPE));
+        lista.add(new TABLE_BUILDER.ColumnType("UserName", INTEGER_TYPE));
+        lista.add(new TABLE_BUILDER.ColumnType("Hour", INTEGER_TYPE));
         lista.add(new TABLE_BUILDER.ColumnType("LatOrg", FLOAT_TYPE));
         lista.add(new TABLE_BUILDER.ColumnType("LonOrg", FLOAT_TYPE));
         lista.add(new TABLE_BUILDER.ColumnType("LatDest", FLOAT_TYPE));
