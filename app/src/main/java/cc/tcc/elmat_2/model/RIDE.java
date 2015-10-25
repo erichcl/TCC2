@@ -2,82 +2,27 @@ package cc.tcc.elmat_2.model;
 
 import java.util.Date;
 
+import cc.tcc.elmat_2.messages.ClassifiCarona;
+import cc.tcc.elmat_2.messages.Ride;
+import cc.tcc.elmat_2.messages.User;
+
 /**
  * Created by erich on 10/10/2015.
  */
 public class RIDE {
-    private int RideID;
-    private int UserID;
-    private Date Hour;
-    private double LatOrg;
-    private double LonOrg;
-    private double LatDest;
-    private double LonDest;
-    private int DriverID;
+    private static final String myTableName = "RIDE";
 
-    public int getRideID() {
-        return RideID;
-    }
-
-    public void setRideID(int rideID) {
-        RideID = rideID;
-    }
-
-    public int getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(int userID) {
-        UserID = userID;
-    }
-
-    public Date getHour() {
-        return Hour;
-    }
-
-    public void setHour(Date hour) {
-        Hour = hour;
-    }
-
-    public double getLatOrg() {
-        return LatOrg;
-    }
-
-    public void setLatOrg(double latOrg) {
-        LatOrg = latOrg;
-    }
-
-    public double getLonOrg() {
-        return LonOrg;
-    }
-
-    public void setLonOrg(double lonOrg) {
-        LonOrg = lonOrg;
-    }
-
-    public double getLatDest() {
-        return LatDest;
-    }
-
-    public void setLatDest(double latDest) {
-        LatDest = latDest;
-    }
-
-    public double getLonDest() {
-        return LonDest;
-    }
-
-    public void setLonDest(double lonDest) {
-        LonDest = lonDest;
-    }
-
-    public int getDriverID() {
-        return DriverID;
-    }
-
-    public void setDriverID(int driverID) {
-        DriverID = driverID;
-    }
+    public int RideID;
+    public int UserID;
+    public Date Hour;
+    public double LatOrg;
+    public double LonOrg;
+    public double LatDest;
+    public double LonDest;
+    public int classOrg;
+    public double distanciaOrg;
+    public int classDes;
+    public double distanciaDes;
 
     public RIDE(int userID, Date hour, double latOrg, double lonOrg, double latDest, double lonDest) {
         UserID = userID;
@@ -86,5 +31,20 @@ public class RIDE {
         LonOrg = lonOrg;
         LatDest = latDest;
         LonDest = lonDest;
+    }
+
+    public RIDE(Ride r)
+    {
+        RideID = r.RideID;
+        UserID = r.usr.UserID;
+        Hour = r.Hour;
+        LatOrg = r.LatOrigem;
+        LonOrg = r.LonOrigem;
+        LatDest = r.LatDestino;
+        LonDest = r.LonDestino;
+        classOrg = r.classOrg.getValue();
+        distanciaOrg = r.distanciaOrg;
+        classDes = r.classDes.getValue();
+        distanciaDes = r.distanciaDes;
     }
 }

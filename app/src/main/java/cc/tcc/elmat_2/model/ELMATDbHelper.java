@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import cc.tcc.elmat_2.model.TABLEBUILDER.RIDE_TABLE;
 import cc.tcc.elmat_2.model.TABLEBUILDER.USER_TABLE;
 import cc.tcc.elmat_2.model.USER;
 
@@ -17,6 +18,7 @@ public class ELMATDbHelper extends SQLiteOpenHelper {
 
     // Tables to initialize
     private USER_TABLE user_table = new USER_TABLE();
+    private RIDE_TABLE ride_table = new RIDE_TABLE();
 
     // Logcat tag
     private static final String LOG = "DatabaseHelper";
@@ -39,11 +41,13 @@ public class ELMATDbHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(user_table.CREATE_TABLE());
+        db.execSQL(ride_table.CREATE_TABLE());
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         db.execSQL(user_table.DROP_TABLE());
+        db.execSQL(ride_table.DROP_TABLE());
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

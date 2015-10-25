@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
             return true;
         }
         if (id == R.id.action_listaCaronas) {
-            UserService.callGetMessage(this);
+            testeListaCaronas();
             return true;
         }
 
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements RoutingListener {
         msgUser.UserID = modelUser.getUserID();
         msgUser.FacebookID = Math.round(modelUser.getFacebookID());
         Location local = getBestLocation();
-        UserService.callListaCaronas(msgUser, local, null);
+        UserService.callListaCaronas(this, msgUser, local, null);
     }
 
     @Override

@@ -13,6 +13,7 @@ public class TABLE_BUILDER
     protected static final String TEXT_TYPE = " TEXT";
     protected static final String INTEGER_TYPE = " INTEGER";
     protected static final String BIGINT_TYPE = " BIGINT";
+    protected static final String FLOAT_TYPE = " REAL";
     protected static final String COMMA_SEP = ",";
 
     protected class ColumnType
