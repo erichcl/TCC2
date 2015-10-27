@@ -7,6 +7,8 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
@@ -153,6 +155,55 @@ public class UserService {
             }
         };
         networkThread.start();
+    }
+
+    public static boolean callCadastraCarona(Context pCtx, Ride ride) {
+        final Context ctx = pCtx;
+        final Ride sendRide = ride;
+        final StringBuilder sb = new StringBuilder();
+        boolean myReturn = false;
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+
+                    Gson gson = new Gson();
+                    String rideJson = gson.toJson(sendRide);
+
+                    JSONObject joPV = new JSONObject(rideJson);
+
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/CadastraCarona", joPV);
+                    sb.append(result);
+                    Log.d("Solicita Carona", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
+        try {
+            networkThread.join();
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            Type myType = new TypeToken<ServiceResponse<Ride>>() {}.getType();
+            ServiceResponse<Ride> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            if (ObjectRetorno.SUCCESS)
+                myReturn = true;
+            else
+                myReturn = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return myReturn;
     }
 
     public static void callGetMessage(Context pCtx) {

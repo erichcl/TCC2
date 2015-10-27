@@ -24,7 +24,7 @@
         <AutoCompleteTextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="New Text"
+            android:hint="@string/autocomplete_placeholder"
             android:id="@+id/search_location"
             android:layout_weight="0.9" />
 

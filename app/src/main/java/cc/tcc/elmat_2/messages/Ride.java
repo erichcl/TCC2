@@ -1,5 +1,7 @@
 package cc.tcc.elmat_2.messages;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 
 /**

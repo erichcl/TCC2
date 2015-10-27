@@ -5,15 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
-import cc.tcc.elmat_2.messages.ClassifiCarona;
 import cc.tcc.elmat_2.messages.Ride;
-import cc.tcc.elmat_2.messages.User;
 
 /**
  * Created by erich on 10/10/2015.

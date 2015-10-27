@@ -51,6 +51,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import cc.tcc.elmat_2.messages.Ride;
+import cc.tcc.elmat_2.messages.User;
+import cc.tcc.elmat_2.model.USER;
+
 public class MainActivity extends AppCompatActivity implements RoutingListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     //region Variables
@@ -255,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user_svc, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -283,6 +287,32 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
                 intent.putExtra("TemDestino", false);
             }
             startActivityForResult(intent, PICK_RIDE_REQUEST);
+            return true;
+        }
+        if (id == R.id.action_pedeCaronas) {
+            if (myMarker == null)
+            {
+                Toast.makeText(getApplicationContext(), "É necessário escolher um destino para pedir carona!", Toast.LENGTH_LONG).show();
+                return false;
+            }
+            Location local = getBestLocation();
+
+            Ride r = new Ride();
+            r.usr = new User(USER.getUser(this));
+            r.LatOrigem = local.getLatitude();
+            r.LonOrigem = local.getLongitude();
+            r.LatDestino = myMarker.getPosition().latitude;
+            r.LonDestino = myMarker.getPosition().longitude;
+            boolean pediu = PedeCarona(r);
+            if (pediu)
+            {
+                Toast.makeText(getApplicationContext(), "Carona solicitada com sucesso!", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Não foi possível pedir carona!", Toast.LENGTH_LONG).show();
+            }
+
             return true;
         }
 
@@ -544,6 +574,12 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
         }
         return cityName;
     }
+
+    private boolean PedeCarona(Ride ride)
+    {
+        return  UserService.callCadastraCarona(getApplicationContext(), ride);
+    }
+
     //endregion
 
 

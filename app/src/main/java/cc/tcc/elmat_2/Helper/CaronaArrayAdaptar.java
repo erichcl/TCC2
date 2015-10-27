@@ -11,9 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cc.tcc.elmat_2.R;
-import cc.tcc.elmat_2.messages.ClassifiCarona;
 import cc.tcc.elmat_2.messages.Ride;
-import cc.tcc.elmat_2.model.RIDE;
 
 /**
  * Created by erich on 25/10/2015.
