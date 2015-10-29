@@ -268,7 +268,9 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_mostraAmigos) {
+            Intent intent = new Intent(this, FriendsActivity.class);
+            startActivity(intent);
             return true;
         }
         if (id == R.id.action_listaCaronas) {
