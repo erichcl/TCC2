@@ -1,7 +1,6 @@
-package cc.tcc.elmat_2.Helper;
+package cc.tcc.elmat_2.ArrayAdapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 
 import cc.tcc.elmat_2.R;
 import cc.tcc.elmat_2.UserService;
-import cc.tcc.elmat_2.messages.Ride;
 import cc.tcc.elmat_2.messages.User;
 import cc.tcc.elmat_2.model.USER;
 
@@ -52,22 +50,31 @@ public class FriendArrayAdaptar extends ArrayAdapter<User> {
         }
         if (userBlock != null)
         {
-//            userBlock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    boolean isBlocked = !isChecked;
-////                    User friend = r;
-////                    User me = new User(USER.getUser(getContext()));
-////                    if (UserService.callBlockFriend(getContext(), me, friend, isBlocked))
-////                    {
-////                        Toast.makeText(getContext(), "Operação bem sucedida", Toast.LENGTH_LONG).show();
-////                    }
-////                    else
-////                    {
-////                        Toast.makeText(getContext(), "Ocorreu um erro na operação", Toast.LENGTH_LONG).show();
-////                    }
-//                }
-//            });
+            if (r.RelationStatus == 1) // Liberado
+            {
+                userBlock.setChecked(true);
+            }
+            else if (r.RelationStatus == 2) // Bloqueado
+            {
+                userBlock.setChecked(false);
+            }
+
+            userBlock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    boolean isBlocked = !isChecked;
+                    User friend = r;
+                    User me = new User(USER.getUser(getContext()));
+                    if (UserService.callBlockFriend(getContext(), me, friend, isBlocked))
+                    {
+                        Toast.makeText(getContext(), "Operação bem sucedida", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(), "Ocorreu um erro na operação", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
 
         return v;

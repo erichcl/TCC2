@@ -14,6 +14,7 @@ public class User{
         public long FacebookID;
         public int UserID;
         public String Name;
+        public int RelationStatus;
 
 
     public User() {

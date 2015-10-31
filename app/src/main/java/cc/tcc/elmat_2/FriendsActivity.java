@@ -6,7 +6,7 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
-import cc.tcc.elmat_2.Helper.FriendArrayAdaptar;
+import cc.tcc.elmat_2.ArrayAdapter.FriendArrayAdaptar;
 import cc.tcc.elmat_2.messages.User;
 import cc.tcc.elmat_2.model.USER;
 

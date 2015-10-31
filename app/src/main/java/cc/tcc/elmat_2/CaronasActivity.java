@@ -4,22 +4,18 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.common.api.BooleanResult;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import cc.tcc.elmat_2.Helper.CaronaArrayAdaptar;
+import cc.tcc.elmat_2.ArrayAdapter.CaronaArrayAdaptar;
 import cc.tcc.elmat_2.messages.Ride;
 import cc.tcc.elmat_2.messages.User;
-import cc.tcc.elmat_2.model.RIDE;
 import cc.tcc.elmat_2.model.USER;
 
 

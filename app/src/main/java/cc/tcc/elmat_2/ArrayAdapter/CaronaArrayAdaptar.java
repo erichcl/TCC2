@@ -1,4 +1,4 @@
-package cc.tcc.elmat_2.Helper;
+package cc.tcc.elmat_2.ArrayAdapter;
 
 import android.content.Context;
 import android.graphics.Color;

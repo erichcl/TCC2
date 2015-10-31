@@ -218,6 +218,7 @@ public class UserService {
                     joPV.put("isBlocked", block);
 
                     String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/BlockFriend", joPV);
+                    sb.append(result);
                     Log.d("Bloqueia Amigo", result);
                 }
                 catch (JSONException ex)
