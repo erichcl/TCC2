@@ -8,7 +8,13 @@ import java.util.Date;
 public class Routine {
     int RoutineID;
     public String Title;
-    public boolean Mon, Tue, Wed, Thu, Fri, Sat, Sun;
+    public boolean Mon;
+    public boolean Tue;
+    public boolean Wed;
+    public boolean Thu;
+    public boolean Fri;
+    public boolean Sat;
+    public boolean Sun;
     public Date Hour;
     public double Latitude;
     public double Longitude;

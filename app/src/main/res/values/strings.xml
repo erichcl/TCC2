@@ -4,6 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_ListaRotinas">Rotina</string>
+    <string name="action_NovaRotina">Nova Rotina</string>
     <string name="action_ListaCaronas">Lista Caronas</string>
     <string name="action_QueroCarona">Quero Carona</string>
     <string name="action_Amigos">Meus Amigos</string>
@@ -17,6 +18,9 @@
     <string name="CaronasTitleColuna">Caronas</string>
     <string name="RotinasTitleColuna">Rotinas</string>
     <string name="AmigosBlockColuna">Ativo</string>
+
+    <string name="strRoutineTitle">Título</string>
+    <string name="strRoutineHour">Hora</string>
     <string name="strMon">Seg</string>
     <string name="strTue">Ter</string>
     <string name="strWed">Qua</string>
@@ -24,4 +28,6 @@
     <string name="strFri">Sex</string>
     <string name="strSat">Sab</string>
     <string name="strSun">Dom</string>
+
+    <string name="strAdd">Adicionar</string>
 </resources>

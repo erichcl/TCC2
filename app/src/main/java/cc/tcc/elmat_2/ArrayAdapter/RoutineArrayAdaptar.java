@@ -81,7 +81,7 @@ public class RoutineArrayAdaptar extends ArrayAdapter<Routine> {
             }
             else
             {
-                Mon.setTextColor(Color.GRAY);
+                Mon.setTextColor(Color.LTGRAY);
             }
         }
         if (Tue != null)
@@ -92,7 +92,7 @@ public class RoutineArrayAdaptar extends ArrayAdapter<Routine> {
             }
             else
             {
-                Tue.setTextColor(Color.GRAY);
+                Tue.setTextColor(Color.LTGRAY);
             }
         }
         if (Wed != null)
@@ -103,7 +103,7 @@ public class RoutineArrayAdaptar extends ArrayAdapter<Routine> {
             }
             else
             {
-                Wed.setTextColor(Color.GRAY);
+                Wed.setTextColor(Color.LTGRAY);
             }
         }
         if (Thu != null)
@@ -114,7 +114,7 @@ public class RoutineArrayAdaptar extends ArrayAdapter<Routine> {
             }
             else
             {
-                Thu.setTextColor(Color.GRAY);
+                Thu.setTextColor(Color.LTGRAY);
             }
         }
         if (Fri != null)
@@ -125,7 +125,7 @@ public class RoutineArrayAdaptar extends ArrayAdapter<Routine> {
             }
             else
             {
-                Fri.setTextColor(Color.GRAY);
+                Fri.setTextColor(Color.LTGRAY);
             }
         }
         if (Sat != null)
@@ -136,7 +136,7 @@ public class RoutineArrayAdaptar extends ArrayAdapter<Routine> {
             }
             else
             {
-                Sat.setTextColor(Color.GRAY);
+                Sat.setTextColor(Color.LTGRAY);
             }
         }
         if (Sun != null)
@@ -147,7 +147,7 @@ public class RoutineArrayAdaptar extends ArrayAdapter<Routine> {
             }
             else
             {
-                Sun.setTextColor(Color.GRAY);
+                Sun.setTextColor(Color.LTGRAY);
             }
         }
 

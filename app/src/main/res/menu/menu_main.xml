@@ -10,4 +10,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_mostraRotinas" android:title="@string/action_ListaRotinas"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_addRotina" android:title="@string/action_NovaRotina"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

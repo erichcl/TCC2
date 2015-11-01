@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
     private int RouteColor = -1;
 
     static final int PICK_RIDE_REQUEST = 1;  // The request code
+    static final int NEW_ROUTINE_REQUEST = 2;  // The request code
     //endregion
 
     //region Listeners
@@ -275,7 +276,21 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
         }
         if (id == R.id.action_mostraRotinas) {
             Intent intent = new Intent(this, RoutineActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, NEW_ROUTINE_REQUEST);
+            return true;
+        }
+        if (id == R.id.action_addRotina) {
+
+            if (myMarker != null) {
+                Intent intent = new Intent(this, AddRoutineActivity.class);
+                intent.putExtra("Latitude", myMarker.getPosition().latitude);
+                intent.putExtra("Longitude", myMarker.getPosition().longitude);
+                startActivity(intent);
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "É necessário escolher um local para cadastrar a rotina!", Toast.LENGTH_LONG).show();
+            }
             return true;
         }
         if (id == R.id.action_listaCaronas) {
@@ -366,6 +381,9 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
                     TracaRota(dOrigem, cOrigem, cDestino);
                 }
             }
+        } else if (requestCode == NEW_ROUTINE_REQUEST)
+        {
+            Toast.makeText(getApplicationContext(), "Escolha um local e selecione a opção Nova Rotina", Toast.LENGTH_LONG).show();
         }
     }
 
