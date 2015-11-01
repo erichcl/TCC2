@@ -273,6 +273,11 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_mostraRotinas) {
+            Intent intent = new Intent(this, RoutineActivity.class);
+            startActivity(intent);
+            return true;
+        }
         if (id == R.id.action_listaCaronas) {
             Location local = getBestLocation();
             Intent intent = new Intent(this, CaronasActivity.class);

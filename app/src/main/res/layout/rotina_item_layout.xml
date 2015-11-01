@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/listRoutineTitle"
+            android:layout_weight="0.7" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/listRoutineHour"
+            android:layout_weight="0.3" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/chkMon"
+            android:text="@string/strMon"
+            android:gravity="center"
+            android:layout_weight="0.15" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/chkTue"
+            android:text="@string/strTue"
+            android:gravity="center"
+            android:layout_weight="0.14" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/chkWed"
+            android:text="@string/strWed"
+            android:gravity="center"
+            android:layout_weight="0.14" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/chkThu"
+            android:text="@string/strThu"
+            android:gravity="center"
+            android:layout_weight="0.14" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/chkFri"
+            android:text="@string/strFri"
+            android:gravity="center"
+            android:layout_weight="0.14" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/chkSat"
+            android:text="@string/strSat"
+            android:gravity="center"
+            android:layout_weight="0.14" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/chkSun"
+            android:text="@string/strSun"
+            android:gravity="center"
+            android:layout_weight="0.15" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

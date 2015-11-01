@@ -21,6 +21,7 @@ import java.util.Collection;
 
 import cc.tcc.elmat_2.messages.GeoPoint;
 import cc.tcc.elmat_2.messages.Ride;
+import cc.tcc.elmat_2.messages.Routine;
 import cc.tcc.elmat_2.messages.ServiceResponse;
 import cc.tcc.elmat_2.messages.User;
 import cc.tcc.elmat_2.model.USER;
@@ -29,6 +30,9 @@ import cc.tcc.elmat_2.model.USER;
  * A placeholder fragment containing a simple view.
  */
 public class UserService {
+
+
+    //region Services Usuário
 
     public static User callRegisterUser(Context pCtx, String paccesToken) {
         User retorno = new User();
@@ -111,6 +115,216 @@ public class UserService {
         }
         return retorno;
     }
+
+    public static boolean callBlockFriend(Context pCtx, User usr, User friend, boolean isBlocked) {
+        final Context ctx = pCtx;
+        final User me = usr;
+        final User myFriend = friend;
+        final boolean block = isBlocked;
+        final StringBuilder sb = new StringBuilder();
+        boolean myReturn = false;
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject joPV = new JSONObject();
+
+                    Gson gson = new Gson();
+                    String usrJson = gson.toJson(me);
+                    String friendJson = gson.toJson(myFriend);
+
+                    joPV.put("User", usrJson);
+                    joPV.put("Friend", friendJson);
+                    joPV.put("isBlocked", block);
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/BlockFriend", joPV);
+                    sb.append(result);
+                    Log.d("Bloqueia Amigo", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
+        try {
+            networkThread.join();
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            Type myType = new TypeToken<ServiceResponse<String>>() {}.getType();
+            ServiceResponse<String> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            if (ObjectRetorno.SUCCESS)
+                myReturn = true;
+            else
+                myReturn = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return myReturn;
+    }
+
+    //endregion
+
+    //region Services Rotina
+
+    public static boolean callDelRoutine(Context pCtx, User usr, Routine rtn) {
+        final Context ctx = pCtx;
+        final User me = usr;
+        final Routine routine = rtn;
+        final StringBuilder sb = new StringBuilder();
+        boolean myReturn = false;
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject joPV = new JSONObject();
+
+                    Gson gson = new Gson();
+                    String usrJson = gson.toJson(me);
+                    String friendJson = gson.toJson(routine);
+
+                    joPV.put("User", usrJson);
+                    joPV.put("Routine", friendJson);
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/DelRoutine", joPV);
+                    sb.append(result);
+                    Log.d("Deleta Rotina", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
+        try {
+            networkThread.join();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            Type myType = new TypeToken<ServiceResponse<Routine>>() {}.getType();
+            ServiceResponse<Routine> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            if (ObjectRetorno.SUCCESS)
+                myReturn = true;
+            else
+                myReturn = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return myReturn;
+    }
+
+    public static boolean callAddRoutine(Context pCtx, User usr, Routine rtn) {
+        final Context ctx = pCtx;
+        final User me = usr;
+        final Routine routine = rtn;
+        final StringBuilder sb = new StringBuilder();
+        boolean myReturn = false;
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject joPV = new JSONObject();
+
+                    Gson gson = new Gson();
+                    String usrJson = gson.toJson(me);
+                    String friendJson = gson.toJson(routine);
+
+                    joPV.put("User", usrJson);
+                    joPV.put("Routine", friendJson);
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/AddRoutine", joPV);
+                    sb.append(result);
+                    Log.d("Registra Rotina", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
+        try {
+            networkThread.join();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            Type myType = new TypeToken<ServiceResponse<Routine>>() {}.getType();
+            ServiceResponse<Routine> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            if (ObjectRetorno.SUCCESS)
+                myReturn = true;
+            else
+                myReturn = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return myReturn;
+    }
+
+    public static ArrayList<Routine> callGetRoutine(Context pCtx, User usr) {
+        final Context ctx = pCtx;
+        final User me = usr;
+        final StringBuilder sb = new StringBuilder();
+        ArrayList<Routine> myReturn = new ArrayList<>();
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+
+
+                    Gson gson = new Gson();
+                    String usrJson = gson.toJson(me);
+
+                    JSONObject joPV = new JSONObject(usrJson);
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/GetRoutines", joPV);
+                    sb.append(result);
+                    Log.d("Registra Rotina", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
+        try {
+            networkThread.join();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            Type myType = new TypeToken<ServiceResponse<ArrayList<Routine>>>() {}.getType();
+            ServiceResponse<ArrayList<Routine>> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            myReturn = ObjectRetorno.RETORNO;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return myReturn;
+    }
+
+
+    //endregion
+
+    //region Services Caronas
 
     public static ArrayList<Ride> callListaCaronas(Context pCtx, User usr, LatLng Origem, LatLng Destino) {
         ArrayList<Ride> retorno = new ArrayList<Ride>();
@@ -196,60 +410,6 @@ public class UserService {
         networkThread.start();
     }
 
-    public static boolean callBlockFriend(Context pCtx, User usr, User friend, boolean isBlocked) {
-        final Context ctx = pCtx;
-        final User me = usr;
-        final User myFriend = friend;
-        final boolean block = isBlocked;
-        final StringBuilder sb = new StringBuilder();
-        boolean myReturn = false;
-        Thread networkThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    JSONObject joPV = new JSONObject();
-
-                    Gson gson = new Gson();
-                    String usrJson = gson.toJson(me);
-                    String friendJson = gson.toJson(myFriend);
-
-                    joPV.put("User", usrJson);
-                    joPV.put("Friend", friendJson);
-                    joPV.put("isBlocked", block);
-
-                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/BlockFriend", joPV);
-                    sb.append(result);
-                    Log.d("Bloqueia Amigo", result);
-                }
-                catch (JSONException ex)
-                {
-                    Log.d("Error JSON", ex.getMessage());
-                }
-                catch (Exception ex)
-                {
-                    Log.d("Error Post", ex.getMessage());
-                }
-            }
-        };
-        networkThread.start();
-        try {
-            networkThread.join();
-
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-            Type myType = new TypeToken<ServiceResponse<String>>() {}.getType();
-            ServiceResponse<String> ObjectRetorno = gson.fromJson(sb.toString(), myType);
-            if (ObjectRetorno.SUCCESS)
-                myReturn = true;
-            else
-                myReturn = false;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return myReturn;
-    }
-
     public static boolean callCadastraCarona(Context pCtx, Ride ride) {
         final Context ctx = pCtx;
         final Ride sendRide = ride;
@@ -299,6 +459,9 @@ public class UserService {
         return myReturn;
     }
 
+    //endregion
+
+
     public static void callGetMessage(Context pCtx) {
         final Context ctx = pCtx;
         final String SOAP_ACTION = "http://tempuri.org/IUserService/RegisterUser";
@@ -329,4 +492,11 @@ public class UserService {
             Log.d("Error Thread", e.getMessage());
         }
     }
+
+
+
+
+
+
+
 }
