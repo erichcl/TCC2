@@ -174,6 +174,57 @@ public class UserService {
 
     //region Services Rotina
 
+    public static boolean callUpdtRoutine(Context pCtx, User usr, Routine rtn) {
+        final Context ctx = pCtx;
+        final User me = usr;
+        final Routine routine = rtn;
+        final StringBuilder sb = new StringBuilder();
+        boolean myReturn = false;
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject joPV = new JSONObject();
+
+                    Gson gson = new Gson();
+                    String usrJson = gson.toJson(me);
+                    String friendJson = gson.toJson(routine);
+
+                    joPV.put("User", usrJson);
+                    joPV.put("Routine", friendJson);
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/UpdtRoutine", joPV);
+                    sb.append(result);
+                    Log.d("Atualiza Rotina", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
+        try {
+            networkThread.join();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            Type myType = new TypeToken<ServiceResponse<String>>() {}.getType();
+            ServiceResponse<String> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            if (ObjectRetorno.SUCCESS)
+                myReturn = true;
+            else
+                myReturn = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return myReturn;
+    }
+
     public static boolean callDelRoutine(Context pCtx, User usr, Routine rtn) {
         final Context ctx = pCtx;
         final User me = usr;
@@ -211,8 +262,8 @@ public class UserService {
         try {
             networkThread.join();
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-            Type myType = new TypeToken<ServiceResponse<Routine>>() {}.getType();
-            ServiceResponse<Routine> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            Type myType = new TypeToken<ServiceResponse<String>>() {}.getType();
+            ServiceResponse<String> ObjectRetorno = gson.fromJson(sb.toString(), myType);
             if (ObjectRetorno.SUCCESS)
                 myReturn = true;
             else
