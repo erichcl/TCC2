@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/VerificaCaronasTitleColuna"
+            android:layout_weight="1"
+            android:id="@+id/textView3"
+            android:layout_gravity="left"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutVerticalCaronaAtendida"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView android:id="@android:id/empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Carona solicitada às: "
+                android:visibility="visible"
+                android:textAlignment="gravity"
+                android:gravity="center|center_horizontal"
+                android:textIsSelectable="false"
+                android:textSize="20dp" />
+
+            <TextView android:id="@+id/caronaHoraAtendida"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:textAlignment="gravity"
+                android:gravity="center|center_horizontal"
+                android:textIsSelectable="false"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView android:id="@android:id/empty"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:text="Carona atendida por: "
+                android:visibility="visible"
+                android:textAlignment="gravity"
+                android:gravity="left"
+                android:textIsSelectable="false"
+                android:textSize="20dp" />
+
+            <TextView android:id="@+id/caronaMotoristaAtendida"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:textAlignment="gravity"
+                android:gravity="left"
+                android:textIsSelectable="false"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+    <TextView android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Não há carona recente cadastrada"
+        android:textAlignment="gravity"
+        android:gravity="center|center_horizontal"
+        android:textIsSelectable="false"
+        android:textSize="26dp" />
+</LinearLayout>

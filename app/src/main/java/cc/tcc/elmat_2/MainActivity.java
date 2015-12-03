@@ -279,6 +279,11 @@ public class MainActivity extends AppCompatActivity implements RoutingListener, 
             startActivityForResult(intent, NEW_ROUTINE_REQUEST);
             return true;
         }
+        if (id == R.id.action_minhacarona) {
+            Intent intent = new Intent(this, VerificaCaronaActivity.class);
+            startActivity(intent);
+            return true;
+        }
         if (id == R.id.action_addRotina) {
 
             if (myMarker != null) {

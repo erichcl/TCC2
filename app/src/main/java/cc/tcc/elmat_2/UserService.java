@@ -24,6 +24,7 @@ import cc.tcc.elmat_2.messages.Ride;
 import cc.tcc.elmat_2.messages.Routine;
 import cc.tcc.elmat_2.messages.ServiceResponse;
 import cc.tcc.elmat_2.messages.User;
+import cc.tcc.elmat_2.messages.VerificaCarona;
 import cc.tcc.elmat_2.model.USER;
 
 /**
@@ -502,6 +503,55 @@ public class UserService {
                 myReturn = true;
             else
                 myReturn = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return myReturn;
+    }
+
+
+    public static VerificaCarona callVerificaCarona(Context pCtx, User usr) {
+        final Context ctx = pCtx;
+        final User sendUser = usr;
+        final StringBuilder sb = new StringBuilder();
+        VerificaCarona myReturn = new VerificaCarona();
+        Thread networkThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+
+                    Gson gson = new Gson();
+                    String userJson = gson.toJson(sendUser);
+
+                    JSONObject joPV = new JSONObject(userJson);
+
+
+                    String result = Utils.postData(ctx, "http://elmat.kinghost.net/elmatServices/Services/UserService.svc/VerificaCarona", joPV);
+                    sb.append(result);
+                    Log.d("Verifica Carona", result);
+                }
+                catch (JSONException ex)
+                {
+                    Log.d("Error JSON", ex.getMessage());
+                }
+                catch (Exception ex)
+                {
+                    Log.d("Error Post", ex.getMessage());
+                }
+            }
+        };
+        networkThread.start();
+        try {
+            networkThread.join();
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+            Type myType = new TypeToken<ServiceResponse<VerificaCarona>>() {}.getType();
+            ServiceResponse<VerificaCarona> ObjectRetorno = gson.fromJson(sb.toString(), myType);
+            if (ObjectRetorno.SUCCESS)
+                myReturn = ObjectRetorno.RETORNO;
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (Exception e) {

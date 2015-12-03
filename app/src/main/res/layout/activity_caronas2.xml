@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingLeft="8dp"
+android:paddingRight="8dp">
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/CaronasTitleColuna"
+        android:layout_weight="1"
+        android:id="@+id/textView3"
+        android:layout_gravity="left"/>
+
+</LinearLayout>
+
+<ListView android:id="@android:id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:layout_weight="1"
+    android:drawSelectorOnTop="false"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/CaronasTitleColuna"
-            android:layout_weight="1"
-            android:id="@+id/textView3"
-            android:layout_gravity="left"/>
-
-    </LinearLayout>
-
-    <ListView android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawSelectorOnTop="false"/>
-
-    <TextView android:id="@android:id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Não foram encontradas caronas"
-        android:textAlignment="gravity"
-        android:gravity="center|center_horizontal"
-        android:textIsSelectable="false"
-        android:textSize="26dp" />
+<TextView android:id="@android:id/empty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="Não foram encontradas caronas"
+    android:textAlignment="gravity"
+    android:gravity="center|center_horizontal"
+    android:textIsSelectable="false"
+    android:textSize="26dp" />
 </LinearLayout>

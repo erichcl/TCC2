@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Ride {
     public int RideID;
+    public int DriverID;
     public User usr;
     public Date Hour;
     public double LatOrigem;
